@@ -14,38 +14,27 @@ using namespace std;
 int main()
 {
 	setlocale(LC_ALL, "Russian");
-	double A, B, C;
-	cout << "Введите коэффициенты 1-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+	EquationController equation;
+	std::string eq = "2x^2 + 4x - 6 = 0";
+	int A = equation.Extraction_a(eq);
+	int B = equation.Extraction_b(eq);
+	int C = equation.Extraction_c(eq);
+
+
 	Type1 eq1;
-	cout << "Введите коэффициенты 2-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type2 eq2(B);
-	cout << "Введите коэффициенты 3-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type3 eq3(C);
-	cout << "Введите коэффициенты 4-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type4 eq4(A, C);
-	cout << "Введите коэффициенты 5-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type5 eq5(B, C);
-	cout << "Введите коэффициенты 6-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type6 eq6(A, B, C);
-	cout << "Введите коэффициенты 7-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type7 eq7(B);
-	cout << "Введите коэффициенты 8-го уравнения A, B и C через пробел: " <<
-		endl;
-	cin >> A >> B >> C;
+
 	Type8 eq8(A, B);
 	
 	eq1.show();
@@ -68,9 +57,4 @@ int main()
 	eq8.show();
 	eq8.Get_answer();
 	eq8.Get_answer_podbor();
-
-
-
-	return 0;
 }
-
