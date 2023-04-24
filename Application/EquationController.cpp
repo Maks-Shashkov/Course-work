@@ -1,12 +1,12 @@
-include "EquationController.h"
+#include "EquationController.h"
 #include <iostream>
 #include <string>
 #include <cstring>
 
 using namespace std;
 
-int EquationController::Extraction_a(const std::string& equation) {
-    int a;
+float EquationController::Extraction_a(const std::string& equation) {
+    float a;
     std::size_t pos = equation.find("x^2");
     if (pos != std::string::npos) {
         std::string sub_result = equation.substr(0, pos);
@@ -14,7 +14,7 @@ int EquationController::Extraction_a(const std::string& equation) {
             a = -1;
         }
         else {
-            a = sub_result.empty() ? 1 : std::stoi(sub_result);
+            a = sub_result.empty() ? 1 : std::stof(sub_result);
         }
     }
     else {
@@ -27,7 +27,6 @@ int EquationController::Extraction_a(const std::string& equation) {
 string EquationController::remove_x_squared(string equation) {
     size_t pos = equation.find("x^2");
     if (pos != string::npos) {
-        // Удаляем коэффициент A, член AX^2 и следующий знак операции
         size_t a_pos = equation.rfind(" ", pos) + 1;
         size_t next_pos = equation.find_first_of("+-", pos);
         if (next_pos == string::npos) {
@@ -45,15 +44,14 @@ void EquationController::removeSpaces(std::string& str) {
     str.erase(end_pos, str.end());
 }
 
-int EquationController::Extraction_b(const std::string& equation) {
-    int b;
-    int b_int;
+float EquationController::Extraction_b(const std::string& equation) {
+    float b;
     std::string eq = equation; // сохраняем исходную строку
     removeSpaces(eq); // удаляем пробелы из строки
-    std::string equation_remove = remove_x_squared(eq);
+    std::string equation_remove = remove_x_squared(eq); // удаляем Ax^2
     std::size_t pos = equation_remove.find("x");
     if (pos != std::string::npos) {
-        std::string sub_result = equation_remove.substr(0, pos);
+        std::string sub_result = equation_remove.substr(0, pos); // коеффициент перед x
         if (sub_result.length() == 1 && sub_result == "+") {
             b = 1;
         }
@@ -62,11 +60,11 @@ int EquationController::Extraction_b(const std::string& equation) {
         }
         else {
             if (sub_result[0] == '-') {
-                b = -stoi(sub_result.substr(1));
+                b = -stof(sub_result.substr(1));
             }
             else
             {
-                b = stoi(sub_result.substr(0));
+                b = stof(sub_result.substr(0));
             }
         }
     }
@@ -76,28 +74,31 @@ int EquationController::Extraction_b(const std::string& equation) {
     return b;
 }
 
-int EquationController::Extraction_c(const std::string& equation) {
-    int c;
-    int c_str;
+float EquationController::Extraction_c(const std::string& equation) {
+    float c_result;
+    float c;
     std::string eq = equation; // сохраняем исходную строку
     removeSpaces(eq); // удаляем пробелы из строки
     std::string equation_remove = remove_x_squared(eq);
-    std::size_t pos = equation_remove.find("=");
-    std::size_t pos_x = equation_remove.find("x") + 1;
+    std::size_t pos = equation_remove.find("="); // индекс чмсла который стоит перед = 
+    std::size_t pos_с = equation_remove.find("x") + 1; // индекс первой цифры коеффициента c 
     if (pos != std::string::npos) {
-        std::string a_str = equation_remove.substr(pos_x, pos - pos_x);
-        c = a_str.empty() ? 1 : std::stoi(a_str);
-        if (a_str[0] == '-') {
-            c_str = -stoi(a_str.substr(1));
+        std::string c_str = equation_remove.substr(pos_с, pos - pos_с); // срез коеффициента c 
+        if (c_str[0] == '-') {
+            c = -stof(c_str.substr(1));
         }
         else
         {
-            c_str = stoi(a_str.substr(0));
+            if (c_str.empty()) {
+                c_result = 0;
+            }
+            else {
+                c_result = stof(c_str.substr(0));
+            }
         }
-        c = a_str.empty() ? 1 : c_str;
     }
     else {
-        c = 0;
+        c_result = 0;
     }
-    return c;
+    return c_result;
 }
