@@ -15,62 +15,66 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	EquationController equation;
-	std::string eq = "-5,6666^x + 3,53 = 0";
-	float A = equation.Extraction_a(eq);
-	float B = equation.Extraction_b(eq);
-	float C = equation.Extraction_c(eq);
-	cout << A << endl;
-	cout << B << endl;
-	cout << C << endl;
+	while (true)
+	{
+		std::string eq;
+		std::cout << "Введите уравнение: ";
+		std::getline(std::cin, eq);
+		float A = equation.Extraction_a(eq);
+		float B = equation.Extraction_b(eq);
+		float C = equation.Extraction_c(eq);
+		cout << "Коэффициент A равен:" << A << endl;
+		cout << "Коэффициент B равен:" << B << endl;
+		cout << "Коэффициент C равен:" << C << endl;
 
-	if (A == 0 && B == 0 && C == 0) {
-		Type1 eq1;
-		eq1.show();
-		eq1.get_answer();
+		if (A == 0 && B == 0 && C == 0) {
+			Type1 eq1;
+			eq1.show();
+			eq1.get_answer();
+		}
+		else if (B == 0 && C == 0)
+		{
+			Type2 eq2(B);
+			eq2.show();
+			eq2.get_answer();
+		}
+		else if (B == 0 && A == 0)
+		{
+			Type3 eq3(C);
+			eq3.show();
+			eq3.Get_answer();
+		}
+		else if (B == 0)
+		{
+			Type4 eq4(A, C);
+			eq4.show();
+			eq4.Get_answer();
+		}
+		else if (A == 0)
+		{
+			Type5 eq5(B, C);
+			eq5.show();
+			eq5.Get_answer();
+			eq5.Get_answer_podbor();
+		}
+		else if (A == 0 && C == 0)
+		{
+			Type7 eq7(B);
+			eq7.show();
+			eq7.Get_answer();
+		}
+		else if (C == 0)
+		{
+			Type8 eq8(A, B);
+			eq8.show();
+			eq8.Get_answer();
+			eq8.Get_answer_podbor();
+		}
+		else {
+			Type6 eq6(A, B, C);
+			eq6.show();
+			eq6.Get_answer();
+			eq6.Get_answer_podbor();
+		}
 	}
-	else if (B == 0 && C == 0)
-	{
-		Type2 eq2(B);
-		eq2.show();
-		eq2.get_answer();
-	}
-	else if (B == 0 && A == 0)
-	{
-		Type3 eq3(C);
-		eq3.show();
-		eq3.Get_answer();
-	}
-	else if (B == 0)
-	{
-		Type4 eq4(A, C);
-		eq4.show();
-		eq4.Get_answer();
-	}
-	else if (A == 0) 
-	{
-		Type5 eq5(B, C);
-		eq5.show();
-		eq5.Get_answer();
-		eq5.Get_answer_podbor();
-	}
-	else if (A == 0 && C == 0) 
-	{
-		Type7 eq7(B);
-		eq7.show();
-		eq7.Get_answer();
-	} 
-	else if (C == 0) 
-	{
-		Type8 eq8(A, B);
-		eq8.show();
-		eq8.Get_answer();
-		eq8.Get_answer_podbor();
-	} 
-	else {
-		Type6 eq6(A, B, C);
-		eq6.show();
-		eq6.Get_answer();
-		eq6.Get_answer_podbor();
-	}
-
 }
